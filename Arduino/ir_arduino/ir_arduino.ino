@@ -1,21 +1,21 @@
 #include <IRremoteInt.h>
 
-#include <IRremote.h> // use the library
-int receiver = 11; // pin 1 of IR receiver to Arduino digital pin 11
-IRrecv irrecv(receiver); // create instance of 'irrecv'
+#include <IRremote.h> 
+int receiver = 11;          // pin di ricezione del segnale IR
+IRrecv irrecv(receiver); 
 decode_results results;
 
 void setup()
 {
-  Serial.begin(9600); // for serial monitor output
-  irrecv.enableIRIn(); // Start the receiver
+  Serial.begin(9600); 
+  irrecv.enableIRIn(); // inizio a ricevere
 }
 void loop()
 {
-  if (irrecv.decode(&results)) // have we received an IR signal?
+  if (irrecv.decode(&results)) // se ricevo un segnale IR stampo quello che ho ricevuto
   {
-    Serial.println(results.value, HEX); // display it on serial monitor in hexadecimal
-    irrecv.resume();// receive the next value
+    Serial.println(results.value, HEX); 
+    irrecv.resume();
     delay(1000);
   }
    delay(2000);
