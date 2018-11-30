@@ -14,7 +14,7 @@ void setup() {
 void loop() {
   if (irrecv.decode(&results)) {
     unsigned int ircode = results.value;
-    Serial.println(String(ircode)); //stampo il segnale ricevuto
+    Serial.println(String(ircode)); //stampo il codice ricevuto
     irrecv.resume();  
     delay(1000);
   }
