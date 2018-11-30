@@ -4,7 +4,10 @@ host_ha:
 #
 #
 pulsanti_telecomando:
-#
+
+# ESEMPIO DI CONTROLLO ALTERNATO
+# UN PULSANTE ALTERNATIVAMENTE VIENE USATO PER 2 SERVIZI DISTINTI
+
 - comando_alternato:
     codice: '3772782313'
     nome_pulsante: uscite
@@ -15,7 +18,9 @@ pulsanti_telecomando:
     servizio_due:
       servizio: scene.turn_on
       entita: scene.fine_cinema
-#
+      
+# ESEMPIO DI CONTROLLO DELLE LUCI
+
 - comando:
       nome_pulsante: "giallo"
       codice: "3772819543"
@@ -29,10 +34,16 @@ pulsanti_telecomando:
       codice: "3772790473"
       servizio: light.turn_on
       dati:
-        #luminosita: "100"
         colore: red
       entita: light.mobile_soggiorno
-#
+- comando:
+      nome_pulsante: "blu"
+      codice: "3772803223"
+      servizio: light.turn_on
+      entita: light.mobile_soggiorno
+      
+#  ESEMPI DI COMANDO DI ESECUZIONE DI UN SERVIZIO DI HA
+
 - comando:
       nome_pulsante: "1"
       codice: "3772784863"
@@ -43,7 +54,10 @@ pulsanti_telecomando:
       codice: "3772813423"
       servizio: script.turn_on
       entita: script.arrivo_papa
-#
+      
+# ESEMPIO DI DIMMER
+# UN PULSANTE AUMENTA LA LUMINOSITA DI UNA LUCE ED UNO LA DIMINUISCE
+
 - dimmer:
       nome_pulsante: "volume +"
       codice: "3772833823"
@@ -106,13 +120,6 @@ pulsanti_telecomando:
         #luminosita: "100"
         colore: green
       entita: light.mobile_soggiorno
-- comando:
-      nome_pulsante: "blu"
-      codice: "3772803223"
-      servizio: light.turn_on
-      dati:
-        #luminosita: "100"
-        colore: blue
-      entita: light.mobile_soggiorno
+
 
  
