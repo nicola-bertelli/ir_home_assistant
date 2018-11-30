@@ -18,5 +18,5 @@ void loop()
     irrecv.resume();// receive the next value
     delay(1000);
   }
-   delay(1000);
+   delay(2000);
 }
