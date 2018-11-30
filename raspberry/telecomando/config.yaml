@@ -4,11 +4,59 @@ host_ha:
 #
 #
 pulsanti_telecomando:
+#
+- comando_alternato:
+    codice: '3772782313'
+    nome_pulsante: uscite
+    servizio_da_eseguire: servizio_uno
+    servizio_uno:
+      servizio: script.turn_on
+      entita: script.cinema_salotto_on
+    servizio_due:
+      servizio: scene.turn_on
+      entita: scene.fine_cinema
+#
+- comando:
+      nome_pulsante: "giallo"
+      codice: "3772819543"
+      servizio: light.turn_on
+      dati:
+        luminosita: "100"
+        colore: yellow
+      entita: light.mobile_soggiorno
+- comando:
+      nome_pulsante: "rosso"
+      codice: "3772790473"
+      servizio: light.turn_on
+      dati:
+        #luminosita: "100"
+        colore: red
+      entita: light.mobile_soggiorno
+#
 - comando:
       nome_pulsante: "1"
       codice: "3772784863"
       servizio: switch.toggle
       entita: switch.luce_entrata
+- comando:
+      nome_pulsante: "5"
+      codice: "3772813423"
+      servizio: script.turn_on
+      entita: script.arrivo_papa
+#
+- dimmer:
+      nome_pulsante: "volume +"
+      codice: "3772833823"
+      skip: "40"
+      entita: light.mobile_soggiorno
+      direzione: "+"
+- dimmer:
+      nome_pulsante: "volume -"
+      codice: "3772829743"
+      skip: "40"
+      entita: light.mobile_soggiorno
+      direzione: "-"
+#
 - comando:
       nome_pulsante: "2"
       codice: "3772817503"
@@ -24,11 +72,7 @@ pulsanti_telecomando:
       codice: "3772780783"
       servizio: switch.toggle
       entita: switch.luce_cucina
-- comando:
-      nome_pulsante: "5"
-      codice: "3772813423"
-      servizio: script.turn_on
-      entita: script.arrivo_papa
+
 - comando:
       nome_pulsante: "6"
       codice: "3772797103"
@@ -54,34 +98,6 @@ pulsanti_telecomando:
       codice: "3772822603"
       servizio: scene.turn_on
       entita: scene.fine_cinema
-- dimmer:
-      nome_pulsante: "volume +"
-      codice: "3772833823"
-      skip: "40"
-      entita: light.mobile_soggiorno
-      direzione: "+"
-- dimmer:
-      nome_pulsante: "volume -"
-      codice: "3772829743"
-      skip: "40"
-      entita: light.mobile_soggiorno
-      direzione: "-"
-- comando:
-      nome_pulsante: "giallo"
-      codice: "3772819543"
-      servizio: light.turn_on
-      dati:
-        luminosita: "100"
-        colore: yellow
-      entita: light.mobile_soggiorno
-- comando:
-      nome_pulsante: "rosso"
-      codice: "3772790473"
-      servizio: light.turn_on
-      dati:
-        #luminosita: "100"
-        colore: red
-      entita: light.mobile_soggiorno
 - comando:
       nome_pulsante: "verde"
       codice: "3772786903"
@@ -98,15 +114,5 @@ pulsanti_telecomando:
         #luminosita: "100"
         colore: blue
       entita: light.mobile_soggiorno
-###
-- comando_alternato:
-    codice: '3772782313'
-    nome_pulsante: uscite
-    servizio_da_eseguire: servizio_uno
-    servizio_uno:
-      servizio: script.turn_on
-      entita: script.cinema_salotto_on
-    servizio_due:
-      servizio: scene.turn_on
-      entita: scene.fine_cinema
+
  
