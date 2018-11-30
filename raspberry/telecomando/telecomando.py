@@ -6,7 +6,9 @@ import yaml
 import serial
 arduino = serial.Serial('/dev/ttyUSB1',9600)
 
-with open("/home/nicola/telecomando/prova.yaml", 'r') as ymlfile:
+file_configurazione = "/home/nicola/telecomando/config.yaml"
+
+with open(file_configurazione, 'r') as ymlfile:
     configurazione = yaml.load(ymlfile)
 
 # LEGGO LE VARIABILI DI STATO DI HOME ASSISTANT
@@ -84,7 +86,7 @@ while 1:
         print ("codice ricevuto da Arduino " + dati)
 
         # VADO A LEGGERE I DATI DEL FILE DI CONFIGURAZIONE
-        with open("/home/nicola/telecomando/prova.yaml", 'r') as ymlfile:
+        with open(file_configurazione, 'r') as ymlfile:
             configurazione = yaml.load(ymlfile)
 
         for leggi in (configurazione['pulsanti_telecomando']):
@@ -157,10 +159,8 @@ while 1:
                     else: prossimo_servizio = 'servizio_uno'
                     leggi[tipo_azione]['servizio_da_eseguire'] = prossimo_servizio
 
-
-
                     #leggi[tipo_azione]= dict(servizio_da_eseguire = prossimo_servizio)
-                    with open("/home/nicola/telecomando/prova.yaml", "w") as ymlfile:
+                    with open(file_configurazione, "w") as ymlfile:
                         yaml.dump(configurazione, ymlfile, default_flow_style=False, allow_unicode=True)
 
 
@@ -168,3 +168,4 @@ while 1:
         print "----------------------------------------"
         print " "
         time.sleep(1)
+                    
