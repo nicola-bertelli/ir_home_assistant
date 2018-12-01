@@ -15,7 +15,7 @@ with open(file_configurazione, 'r') as ymlfile:
 host_ha = configurazione['host_ha']['host']
 tocken = 'Bearer ' + configurazione['host_ha']['tocken']
 
-# ROUTINE DA ESEGUIRE CON IL BOTTONE "COMANDO"
+# ROUTINE DA ESEGUIRE CON  LA CONFIGURAZIONE "COMANDO"
 def comando_HA(nome_entita, servizio):
     global host_ha
     global password_ha
@@ -78,9 +78,9 @@ def controllo_luce(nome_entita, servizio, lum, colore):
 
 print "----------------------------------------"
 
-while 1:
+while True:
     if(arduino.inWaiting()>0):
-        # LEGGO I PRIMI 10 NUMERI CHE MI INVIA ARDUINO
+        # LEGGO LE PRIME 10 CIFRE CHE MI INVIA ARDUINO
         dati = str((arduino.readline()))[0:10]
         print (" ")
         print ("codice ricevuto da Arduino " + dati)
@@ -167,5 +167,4 @@ while 1:
         print " "
         print "----------------------------------------"
         print " "
-        time.sleep(1)
                     
