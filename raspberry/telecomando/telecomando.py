@@ -3,10 +3,17 @@ import json
 import time
 import requests
 import yaml
+
 import serial
 arduino = serial.Serial('/dev/ttyUSB0',9600)
 
-file_configurazione = "/home/nicola/telecomando/config.yaml"
+import getpass
+utente = getpass.getuser()
+
+file_configurazione = "/home/" + utente + "/telecomando/config.yaml"
+print
+print ("File di configurazione impostato " + file_configurazione)
+print
 
 with open(file_configurazione, 'r') as ymlfile:
     configurazione = yaml.load(ymlfile)
@@ -15,7 +22,7 @@ with open(file_configurazione, 'r') as ymlfile:
 host_ha = configurazione['host_ha']['host']
 tocken = 'Bearer ' + configurazione['host_ha']['tocken']
 
-# ROUTINE DA ESEGUIRE CON  LA CONFIGURAZIONE "COMANDO"
+# ROUTINE DA ESEGUIRE CON LA CONFIGURAZIONE "COMANDO"
 def comando_HA(nome_entita, servizio):
     global host_ha
     global password_ha
@@ -36,18 +43,18 @@ def comando_HA(nome_entita, servizio):
 def stato_luminosita(nome_entita):
     global host_ha
     global password_ha
-    try:
-        richiesta_http = urllib2.Request(host_ha + '/api/states/' + nome_entita )
-        richiesta_http.add_header('Authorization', tocken)
-        richiesta_http.add_header('Content-Type', 'application/json')
-        dataj=json.loads(urllib2.urlopen(richiesta_http).read())
-        stato=str(dataj['attributes']['brightness'])
-        print ("stato luminosita lettura da HA " + stato)
-        return stato
-    except:
-        print "errore lettura Json, imposto la luminosita a 10 "
-        stato = "10"
-        return stato
+    #try:
+    richiesta_http = urllib2.Request(host_ha + '/api/states/' + nome_entita )
+    richiesta_http.add_header('Authorization', tocken)
+    richiesta_http.add_header('Content-Type', 'application/json')
+    dataj=json.loads(urllib2.urlopen(richiesta_http).read())
+    stato=str(dataj['attributes']['brightness'])
+    print ("stato luminosita lettura da HA " + stato)
+    return stato
+    #except:
+    #    print "errore lettura Json, imposto la luminosita a 10 "
+    #    stato = "10"
+    #    return stato
 
 
 # ROUTINE PER ATTRIBUIRE ALLA LUCE I DATI IMPOSTATI DA CONFIGURAZIONE
@@ -80,7 +87,7 @@ print "----------------------------------------"
 
 while True:
     if(arduino.inWaiting()>0):
-        # LEGGO LE PRIME 10 CIFRE CHE MI INVIA ARDUINO
+        # LEGGO I PRIMI 10 NUMERI CHE MI INVIA ARDUINO
         dati = str((arduino.readline()))[0:10]
         print (" ")
         print ("codice ricevuto da Arduino " + dati)
@@ -159,6 +166,8 @@ while True:
                     else: prossimo_servizio = 'servizio_uno'
                     leggi[tipo_azione]['servizio_da_eseguire'] = prossimo_servizio
 
+
+
                     #leggi[tipo_azione]= dict(servizio_da_eseguire = prossimo_servizio)
                     with open(file_configurazione, "w") as ymlfile:
                         yaml.dump(configurazione, ymlfile, default_flow_style=False, allow_unicode=True)
@@ -167,4 +176,4 @@ while True:
         print " "
         print "----------------------------------------"
         print " "
-                    
+        #time.sleep(1)
