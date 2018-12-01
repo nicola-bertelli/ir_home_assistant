@@ -1,6 +1,6 @@
 host_ha:
   host: https://XXXXXXXXXXXXXXX:8123
-  api_password: XXXXXXXXXXXX
+  tocken: Bearer tocken_dato_da_HA
 #
 #
 pulsanti_telecomando:
