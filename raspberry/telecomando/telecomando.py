@@ -4,7 +4,7 @@ import time
 import requests
 import yaml
 import serial
-arduino = serial.Serial('/dev/ttyUSB1',9600)
+arduino = serial.Serial('/dev/ttyUSB0',9600)
 
 file_configurazione = "/home/nicola/telecomando/config.yaml"
 
@@ -13,7 +13,7 @@ with open(file_configurazione, 'r') as ymlfile:
 
 # LEGGO LE VARIABILI DI STATO DI HOME ASSISTANT
 host_ha = configurazione['host_ha']['host']
-password_ha = configurazione['host_ha']['api_password']
+tocken = 'Bearer ' + configurazione['host_ha']['tocken']
 
 # ROUTINE DA ESEGUIRE CON IL BOTTONE "COMANDO"
 def comando_HA(nome_entita, servizio):
@@ -22,7 +22,7 @@ def comando_HA(nome_entita, servizio):
     print ("entita ricevuta " + nome_entita + " servizio ricevuto " + servizio)
     headers = {
         'Content-Type': 'application/json',
-        'x-ha-access': password_ha,
+        'Authorization': tocken,
     }
     data = '{"entity_id": "%s" }' % nome_entita
     try:
@@ -38,7 +38,7 @@ def stato_luminosita(nome_entita):
     global password_ha
     try:
         richiesta_http = urllib2.Request(host_ha + '/api/states/' + nome_entita )
-        richiesta_http.add_header('x-ha-access', password_ha)
+        richiesta_http.add_header('Authorization', tocken)
         richiesta_http.add_header('Content-Type', 'application/json')
         dataj=json.loads(urllib2.urlopen(richiesta_http).read())
         stato=str(dataj['attributes']['brightness'])
@@ -56,7 +56,7 @@ def controllo_luce(nome_entita, servizio, lum, colore):
     global password_ha
     headers = {
         'Content-Type': 'application/json',
-        'x-ha-access': password_ha,
+        'Authorization': tocken,
     }
     if (servizio == "light.turn_on"):
         if (lum == " "):
