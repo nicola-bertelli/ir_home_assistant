@@ -176,4 +176,3 @@ while True:
         print " "
         print "----------------------------------------"
         print " "
-        #time.sleep(1)
