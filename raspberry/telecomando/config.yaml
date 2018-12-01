@@ -1,6 +1,6 @@
 host_ha:
   host: https://XXXXXXXXXXXXXXX:8123
-  tocken: Bearer tocken_dato_da_HA
+  tocken: Bearer tocken_dato_da_HA  # esempio  tocken : Bearer DQRFEWLGH435256FHIVKJHGWK
 #
 #
 pulsanti_telecomando:
