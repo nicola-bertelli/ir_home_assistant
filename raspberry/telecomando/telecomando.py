@@ -1,31 +1,42 @@
-import urllib2
 import json
 import time
 import requests
 import yaml
-
 import serial
-arduino = serial.Serial('/dev/ttyUSB0',9600)
-
 import getpass
-utente = getpass.getuser()
 
-file_configurazione = "/home/" + utente + "/telecomando/config.yaml"
-print
+
+utente = getpass.getuser()
+if (utente == "root"):
+    print
+    print ("esci da modalita ROOT e riavvia lo script")
+    print ("GRAZIE")
+    print
+    exit()
+
+try:
+    print
+    file_configurazione = "/home/" + utente + "/telecomando/config.yaml"
+    with open(file_configurazione, 'r') as ymlfile:
+        configurazione = yaml.load(ymlfile)
+except:
+    print ("File di configurazione non trovato")
+    exit()
 print ("File di configurazione impostato " + file_configurazione)
 print
 
-with open(file_configurazione, 'r') as ymlfile:
-    configurazione = yaml.load(ymlfile)
 
 # LEGGO LE VARIABILI DI STATO DI HOME ASSISTANT
+# E APRO IL COLLEGAMENTO SERIALE CON ARDUINO
 host_ha = configurazione['host_ha']['host']
 tocken = 'Bearer ' + configurazione['host_ha']['tocken']
+porta_seriale = configurazione['node_arduino']['porta_seriale']
+
+arduino = serial.Serial(porta_seriale, 9600)
+
 
 # ROUTINE DA ESEGUIRE CON LA CONFIGURAZIONE "COMANDO"
 def comando_HA(nome_entita, servizio):
-    global host_ha
-    global password_ha
     print ("entita ricevuta " + nome_entita + " servizio ricevuto " + servizio)
     headers = {
         'Content-Type': 'application/json',
@@ -38,29 +49,25 @@ def comando_HA(nome_entita, servizio):
     except:
         print "errore requests"
 
+
+
 # ROUTINE PER LEGGERE IL VALORE DELLA LUMINOSITA DA HA
 # IN CASO DI ERRORE RITORNA 10
 def stato_luminosita(nome_entita):
-    global host_ha
-    global password_ha
-    #try:
-    richiesta_http = urllib2.Request(host_ha + '/api/states/' + nome_entita )
-    richiesta_http.add_header('Authorization', tocken)
-    richiesta_http.add_header('Content-Type', 'application/json')
-    dataj=json.loads(urllib2.urlopen(richiesta_http).read())
-    stato=str(dataj['attributes']['brightness'])
-    print ("stato luminosita lettura da HA " + stato)
-    return stato
-    #except:
-    #    print "errore lettura Json, imposto la luminosita a 10 "
-    #    stato = "10"
-    #    return stato
+    try:
+        headers = {'Authorization' : tocken, 'Content-Type':'application/json' }
+        statoj = json.loads((requests.get((host_ha + '/api/states/' + entita), headers=headers)).text)
+        stato = str(statoj['attributes']['brightness'])
+        print ("stato luminosita lettura da HA " + stato)
+        return stato
+    except:
+        print "errore lettura Json, imposto la luminosita a 10 "
+        stato = "10"
+        return stato
 
 
 # ROUTINE PER ATTRIBUIRE ALLA LUCE I DATI IMPOSTATI DA CONFIGURAZIONE
 def controllo_luce(nome_entita, servizio, lum, colore):
-    global host_ha
-    global password_ha
     headers = {
         'Content-Type': 'application/json',
         'Authorization': tocken,
@@ -84,6 +91,7 @@ def controllo_luce(nome_entita, servizio, lum, colore):
         print "errore requests"
 
 print "----------------------------------------"
+
 
 while True:
     if(arduino.inWaiting()>0):
@@ -166,9 +174,6 @@ while True:
                     else: prossimo_servizio = 'servizio_uno'
                     leggi[tipo_azione]['servizio_da_eseguire'] = prossimo_servizio
 
-
-
-                    #leggi[tipo_azione]= dict(servizio_da_eseguire = prossimo_servizio)
                     with open(file_configurazione, "w") as ymlfile:
                         yaml.dump(configurazione, ymlfile, default_flow_style=False, allow_unicode=True)
 
