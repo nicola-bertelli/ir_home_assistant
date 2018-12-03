@@ -1,10 +1,13 @@
 host_ha:
   host: https://XXXXXXXXXXXXXXX:8123
-  tocken: tocken_dato_da_HA  # esempio  tocken : DQiyRugkfFEWLGHefg435256FHIVKJHGWK
+  tocken: tocken_dato_da_HA  
+# esempio  tocken : DQiyRugkfFEWLGHefg435256FHIVKJHGWK
 #
+#
+node_arduino:
+  porta_seriale: '/dev/ttyUSB0'
 #
 pulsanti_telecomando:
-
 # ESEMPIO DI CONTROLLO ALTERNATO
 # UN PULSANTE ALTERNATIVAMENTE VIENE USATO PER 2 SERVIZI DISTINTI
 
