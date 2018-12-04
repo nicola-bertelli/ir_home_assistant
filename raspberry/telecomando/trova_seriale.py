@@ -2,7 +2,7 @@ import serial
 import yaml
 import getpass
 
-porte = ['/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyUSB0', '/dev/ttyUSB1']
+porte = ['/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyACM2', '/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2']
 porta = ' '
 
 for porta in porte:
