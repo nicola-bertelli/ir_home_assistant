@@ -31,5 +31,5 @@ arduino = serial.Serial(porta_seriale, 9600)
 
 while 1:
 	if(arduino.inWaiting()>0):
-		dati = str((arduino.readline()).split("\n")[0])
+		dati = str((arduino.readline()))[0:10]
 		print dati
