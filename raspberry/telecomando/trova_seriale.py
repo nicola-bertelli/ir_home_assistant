@@ -17,6 +17,7 @@ print (' ')
 if porta != ' ':
     print ('porta seriale utilizzata ' + str(porta))
 else:
+	print ('porta seriale non trovata ')
 	exit()
 
 
