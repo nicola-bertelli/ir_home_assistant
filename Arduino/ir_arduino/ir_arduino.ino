@@ -1,5 +1,3 @@
-#include <IRremoteInt.h>
-
 #include <IRremote.h> 
 int receiver = 11;          // pin di ricezione del segnale IR
 IRrecv irrecv(receiver); 
