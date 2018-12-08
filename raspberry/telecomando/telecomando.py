@@ -95,10 +95,10 @@ print "----------------------------------------"
 
 while True:
     if(arduino.inWaiting()>0):
-        # LEGGO I PRIMI 10 NUMERI CHE MI INVIA ARDUINO
-        dati = str((arduino.readline()))[0:10]
+        # LEGGO I CARATTERI CHE MI INVIA ARDUINO
+        dati = (arduino.readline()).split('\r')[0]
         print (" ")
-        print ("codice ricevuto da Arduino " + dati)
+        print ("codice ricevuto da Arduino %s") %(dati)
 
         # VADO A LEGGERE I DATI DEL FILE DI CONFIGURAZIONE
         with open(file_configurazione, 'r') as ymlfile:
