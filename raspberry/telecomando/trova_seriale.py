@@ -32,7 +32,7 @@ if (utente == "root"):
 
 try:
     print
-    file_configurazione = "/home/pi/telecomando/config.yaml"
+    file_configurazione = "/home/" + utente + "/telecomando/config.yaml"
     with open(file_configurazione, 'r') as ymlfile:
         configurazione = yaml.load(ymlfile)
 	configurazione ['node_arduino']['porta_seriale'] = porta
