@@ -3,20 +3,10 @@ import time
 import requests
 import yaml
 import serial
-import getpass
-
-
-utente = getpass.getuser()
-if (utente == "root"):
-    print
-    print ("esci da modalita ROOT e riavvia lo script")
-    print ("GRAZIE")
-    print
-    exit()
 
 try:
     print
-    file_configurazione = "/home/" + utente + "/telecomando/config.yaml"
+    file_configurazione = "/home/pi/telecomando/config.yaml"
     with open(file_configurazione, 'r') as ymlfile:
         configurazione = yaml.load(ymlfile)
 except:
