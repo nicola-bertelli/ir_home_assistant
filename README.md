@@ -1,2 +1,2 @@
 # ir_home_assistant
-check Home Assistant with a television remote control
+vai al wiki  https://github.com/nicola-bertelli/ir_home_assistant/wiki
