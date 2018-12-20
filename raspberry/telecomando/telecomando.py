@@ -19,7 +19,7 @@ print
 # LEGGO LE VARIABILI DI STATO DI HOME ASSISTANT
 # E APRO IL COLLEGAMENTO SERIALE CON ARDUINO
 host_ha = configurazione['host_ha']['host']
-tocken = 'Bearer ' + configurazione['host_ha']['tocken']
+token = 'Bearer ' + configurazione['host_ha']['token']
 porta_seriale = configurazione['node_arduino']['porta_seriale']
 
 arduino = serial.Serial(porta_seriale, 9600)
@@ -30,7 +30,7 @@ def comando_HA(nome_entita, servizio):
     print ("entita ricevuta " + nome_entita + " servizio ricevuto " + servizio)
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': tocken,
+        'Authorization': token,
     }
     data = '{"entity_id": "%s" }' % nome_entita
     try:
@@ -45,7 +45,7 @@ def comando_HA(nome_entita, servizio):
 # IN CASO DI ERRORE RITORNA 10
 def stato_luminosita(nome_entita):
     try:
-        headers = {'Authorization' : tocken, 'Content-Type':'application/json' }
+        headers = {'Authorization' : token, 'Content-Type':'application/json' }
         statoj = json.loads((requests.get((host_ha + '/api/states/' + entita), headers=headers)).text)
         stato = str(statoj['attributes']['brightness'])
         print ("stato luminosita lettura da HA " + stato)
@@ -60,7 +60,7 @@ def stato_luminosita(nome_entita):
 def controllo_luce(nome_entita, servizio, lum, colore):
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': tocken,
+        'Authorization': token,
     }
     if (servizio == "light.turn_on"):
         if (lum == " "):
